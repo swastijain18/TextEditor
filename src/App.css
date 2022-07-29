@@ -1,0 +1,17 @@
+.textConatiner, .textSumm{
+  text-align: center;
+}
+
+.textSumm{
+  padding-top: 25px;
+}
+#inbox{
+  width: 40rem;
+  height: 15rem;
+}
+
+.btns{
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
