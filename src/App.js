@@ -1,12 +1,34 @@
 import './App.css';
-import { Navbar, Container, DropdownButton, Button } from "react-bootstrap"
+import { Navbar, Container, DropdownButton } from "react-bootstrap"
 import React, { useState } from 'react'
 import Btn from './Btn'
+import Form from 'react-bootstrap/Form';
 
 
-function App() {
+function App( ) {
 
   const [text, setText] = useState("");
+
+  const [mode, setMode] = useState({
+    color: "black",
+    backgroundColor: "white"
+  });
+
+
+  const toggleMode = () => {
+    if (mode.color === "black") {
+      setMode({
+        color: "white",
+        backgroundColor: "black"
+      })
+    }
+    else {
+      setMode({
+        color: "black",
+        backgroundColor: "white"
+      })
+    }
+  }
 
   const onChangeEvent = (event) => {
     setText(event.target.value)
@@ -101,8 +123,6 @@ function App() {
     document.getElementById('text').innerHTML = text;
     document.getElementById('text').style.color = "blue";
     document.getElementById('text').style.fontWeight = "bold";
-
-
   }
 
 
@@ -117,17 +137,26 @@ function App() {
 
   return (
     <div>
-      <Navbar bg="dark" variant='dark'>
+      <Navbar >
         <Container >
           <Navbar.Brand href="#home">TEXT EDITOR</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
+          <Form>
+            <Form.Check
+              type="switch"
+              id="custom-switch"
+              label="Change Mode"
+              onClick={toggleMode}
+            />
+          </Form>
         </Container>
       </Navbar>
 
-      <div>
+      <div style={mode}>
 
         {/* current date and time at the top */}
-        <div id='date' style={{ textAlign: "right", paddingTop: "5px", fontWeight: "bold", color: "navy", fontSize: "20px" }}>
+        <div id='date' style={{ textAlign: "right", paddingTop: "5px", fontWeight: "bold", fontSize: "20px", mode }}>
           {displayDate()}
         </div>
 
@@ -141,7 +170,7 @@ function App() {
 
           {/* ALL BUTTONS  */}
           <div className='btns'>
-            <Btn action="Uppercase" func={toUpper} />
+            <Btn action="Uppercase" func={toUpper}/>
             <Btn action="LowerCase" func={toLower} />
             <Btn action="Copy" func={copy} />
 
@@ -166,7 +195,7 @@ function App() {
 
           <h2>Text Information</h2>
           <p style={{ color: "blue", fontWeight: "bold" }}>
-            {text.split(" ").length} words and {text.length} characters</p>
+            {text.split(/\s+/).filter(function (n) { return n != "" }).length} words and {text.length} characters</p>
         </div>
 
         <div className='textSumm my-4'>
